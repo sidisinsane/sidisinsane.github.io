@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hyphenation</title>
+
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+    }
+
+    @media (min-width: 560px) {
+        body {
+            font-size: 14px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        body {
+            font-size: 15px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        body {
+            font-size: 16px;
+        }
+    }
+
+    a {
+        color: inherit;
+    }
+
+    .container {
+        width: 80%;
+        margin: auto;
+    }
+
+    .copy {
+        width: 20em;
+        max-width: 100%;
+    }
+
+    .section + .section {
+        margin-top: 3em;
+    }
+
+    .code {
+        white-space: pre-wrap;
+    }
+
+    .css-word-break {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .css-hyphens {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        -ms-hyphens: auto;
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        hyphens: auto;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>
+                <a href="https://stackoverflow.com/questions/226464/soft-hyphen-in-html-wbr-vs-shy" target="_blank">
+                    Hyphenation Test Page
+                </a>
+            </h1>
+        </header>
+
+        <section class="section">
+            <h2>CSS word-break</h2>
+            <code class="code">
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            </code>
+            <div>
+                <p class="copy css-word-break">
+                    Veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>CSS hyphens</h2>
+            <code class="code">
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            -ms-hyphens: auto;
+            -webkit-hyphens: auto;
+            -moz-hyphens: auto;
+            hyphens: auto;
+            </code>
+            <p class="copy css-hyphens">
+                Veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2>Unicode Soft Hyphen <i>(Search Engine Safe)</i></h2>
+            <code class="code">
+            &amp;#173;
+            </code>
+            <p class="copy soft-hyphen">
+                Very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word.
+            </p>
+        </section>
+    </div>
+</body>
+</html>
