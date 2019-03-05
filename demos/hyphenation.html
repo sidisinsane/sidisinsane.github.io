@@ -114,6 +114,24 @@
                 Very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word very&#173;very&#173;very&#173;very&#173;long&#173;word.
             </p>
         </section>
+
+        <section class="section">
+            <h2>CSS hyphens &amp; Unicode Soft Hyphen</h2>
+            <code class="code">
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            -ms-hyphens: auto;
+            -webkit-hyphens: auto;
+            -moz-hyphens: auto;
+            hyphens: auto;
+            </code>
+            <code class="code">
+            &amp;#173;
+            </code>
+            <p class="copy css-hyphens">
+                Veryveryveryverylongword veryveryveryverylongword veryveryveryverylongword very&#173;veryveryverylongword veryveryveryverylong&#173;word veryveryveryverylongword veryvery&#173;veryverylongword veryveryveryverylongword veryveryveryverylongword veryveryveryvery&#173;longword.
+            </p>
+        </section>
     </div>
 </body>
 </html>
