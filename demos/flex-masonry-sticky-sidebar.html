@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Masonry with Sticky</title>
+
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+
+    <style>
+    *,
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+
+    body {
+        box-sizing: inherit;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        background-color: #cccccc;
+    }
+
+    @media (min-width: 560px) {
+        body {
+            font-size: 14px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        body {
+            font-size: 15px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        body {
+            font-size: 16px;
+        }
+    }
+
+    .container {
+        width: 80%;
+        margin: auto;
+    }
+
+    .header {
+        padding: .5rem;
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .sidebar {
+        width: 100%;
+        order: 1;
+    }
+
+    .main {
+        width: 100%;
+        order: 2;
+    }
+
+    .masonry {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .teaser {
+        padding: .5rem;
+        margin: 0;
+        width: 100%;
+        transition: all 300ms linear;
+    }
+
+    .wrapper:hover .teaser {
+        opacity: .5;
+        filter: grayscale(1);
+    }
+
+    .wrapper:hover .teaser:hover {
+        opacity: 1;
+        filter: grayscale(0);
+    }
+
+    .teaser__link {
+        display: block;
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .teaser__figcaption {
+        background-color: #ffffff;
+        width: 24em;
+        max-width: 70%;
+        padding: .5rem 1rem;
+        margin-top: -1rem;
+        margin-left: auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    .teaser__headline {
+        font-size: 1rem;
+        font-weight: 300;
+        line-height: 1.15;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .teaser__subline {
+        font-size: .86666rem;
+        font-weight: 300;
+        line-height: 1.15;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .teaser__img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    @media (min-width: 1000px) {
+        .wrapper {
+            flex-wrap: nowrap;
+            max-width: 1000px;
+        }
+
+        .sidebar {
+            width: 40%;
+            height: 640px;
+            min-height: 640px;
+            overflow: hidden;
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+        }
+
+        .main {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .masonry {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            height: 1500px;
+            min-height: 1500px;
+        }
+
+        .masonry__teaser {
+            width: 50%;
+            margin: 0;
+        }
+    }
+
+    /* --- animated underline START --- */
+    .link__text--animated {
+        text-decoration: none;
+        display: inline;
+        /* I don't know why this is needed, I just added it and it worked in IE Edge. If we remove this width, the gradient breaks in IE Edge */
+        width: calc(100%);
+        background-image: linear-gradient(transparent calc(100% - 1px), currentColor 1px);
+        background-repeat: no-repeat;
+        background-size: 0% 100%;
+        transition: background-size 300ms linear;
+    }
+
+    .teaser__link:hover .link__text--animated,
+    .link__text--animated:hover {
+        background-size: 100% 100%;
+    }
+    /* --- animated underline END --- */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>
+                CSS Flex Masonry with Sticky Sidebar
+            </h1>
+        </header>
+
+        <div class="wrapper">
+            <main class="main masonry">
+                <figure class="teaser masonry__teaser">
+                    <a class="teaser__link" href="#">
+                        <picture class="teaser__picture">
+                            <img class="teaser__img" src="https://picsum.photos/400/400?image=50" alt="">
+                        </picture>
+
+                        <figcaption class="teaser__figcaption">
+                            <h2 class="teaser__headline teaser__link-text link__text--animated">
+                                01. Lorem ipsum dolor sit amet
+                            </h2>
+                            <h4 class="teaser__subline teaser__link-text link__text--animated">Necessitatibus, sed eum.</h4>
+                        </figcaption>
+                    </a>
+                </figure>
+
+                <figure class="teaser masonry__teaser">
+                    <a class="teaser__link" href="#">
+                        <picture class="teaser__picture">
+                            <img class="teaser__img" src="https://picsum.photos/400/600?image=60" alt="">
+                        </picture>
+
+                        <figcaption class="teaser__figcaption">
+                            <h2 class="teaser__headline teaser__link-text link__text--animated">02. Consectetur adipisicing elit.</h2>
+                            <h4 class="teaser__subline teaser__link-text link__text--animated">Necessitatibus, sed eum.</h4>
+                        </figcaption>
+                    </a>
+                </figure>
+                
+                <figure class="teaser masonry__teaser">
+                    <a class="teaser__link" href="#">
+                        <picture class="teaser__picture">
+                            <img class="teaser__img" src="https://picsum.photos/400/400?image=50" alt="">
+                        </picture>
+
+                        <figcaption class="teaser__figcaption">
+                            <h2 class="teaser__headline teaser__link-text link__text--animated">03. Eius fugit, ut, illo voluptas</h2>
+                            <h4 class="teaser__subline teaser__link-text link__text--animated">Necessitatibus, sed eum.</h4>
+                        </figcaption>
+                    </a>
+                </figure>
+
+                <figure class="teaser masonry__teaser">
+                    <a class="teaser__link" href="#">
+                        <picture class="teaser__picture">
+                            <img class="teaser__img" src="https://picsum.photos/400/600?image=60" alt="">
+                        </picture>
+
+                        <figcaption class="teaser__figcaption">
+                            <h2 class="teaser__headline teaser__link-text link__text--animated">04. Earum a commodi temporibus ad.</h2>
+                            <h4 class="teaser__subline teaser__link-text link__text--animated">Necessitatibus, sed eum.</h4>
+                        </figcaption>
+                    </a>
+                </figure>
+
+                <figure class="teaser masonry__teaser">
+                    <a class="teaser__link" href="#">
+                        <picture class="teaser__picture">
+                            <img class="teaser__img" src="https://picsum.photos/400/400?image=50" alt="">
+                        </picture>
+
+                        <figcaption class="teaser__figcaption">
+                            <h2 class="teaser__headline teaser__link-text link__text--animated">05. Repellendus quasi earum voluptate</h2>
+                            <h4 class="teaser__subline teaser__link-text link__text--animated">Necessitatibus, sed eum.</h4>
+                        </figcaption>
+                    </a>
+                </figure>
+
+                <figure class="teaser masonry__teaser">
+                    <a class="teaser__link" href="#">
+                        <picture class="teaser__picture">
+                            <img class="teaser__img" src="https://picsum.photos/400/600?image=60" alt="">
+                        </picture>
+
+                        <figcaption class="teaser__figcaption">
+                            <h2 class="teaser__headline teaser__link-text link__text--animated">06. Officia possimus obcaecati quia.</h2>
+                            <h4 class="teaser__subline teaser__link-text link__text--animated">Necessitatibus, sed eum.</h4>
+                        </figcaption>
+                    </a>
+                </figure>
+            </main>
+
+            <aside class="sidebar">
+                <figure class="teaser teaser--featured">
+                    <a class="teaser__link" href="#">
+                        <picture class="teaser__picture">
+                            <img class="teaser__img" src="https://picsum.photos/400/600?image=100" alt="">
+                        </picture>
+
+                        <figcaption class="teaser__figcaption">
+                            <h2 class="teaser__headline teaser__link-text link__text--animated">07. Totam, et, consequatur.</h2>
+                            <h4 class="teaser__subline teaser__link-text link__text--animated">Necessitatibus, sed eum.</h4>
+                        </figcaption>
+                    </a>
+                </figure>
+            </aside>
+        </div>
+
+        <div class="wrapper">
+            <main class="main masonry">
+                <figure class="teaser masonry__teaser">
+                    <a class="teaser__link" href="#">
+                        <picture class="teaser__picture">
+                            <img class="teaser__img" src="https://picsum.photos/400/400?image=50" alt="">
+                        </picture>
+
+                        <figcaption class="teaser__figcaption">
+                            <h2 class="teaser__headline teaser__link-text link__text--animated">
+                                01. Lorem ipsum dolor sit amet
+                            </h2>
+                            <h4 class="teaser__subline teaser__link-text link__text--animated">Necessitatibus, sed eum.</h4>
+                        </figcaption>
+                    </a>
+                </figure>
+
+                <figure class="teaser masonry__teaser">
+                    <a class="teaser__link" href="#">
+                        <picture class="teaser__picture">
+                            <img class="teaser__img" src="https://picsum.photos/400/600?image=60" alt="">
+                        </picture>
+
+                        <figcaption class="teaser__figcaption">
+                            <h2 class="teaser__headline teaser__link-text link__text--animated">02. Consectetur adipisicing elit.</h2>
+                            <h4 class="teaser__subline teaser__link-text link__text--animated">Necessitatibus, sed eum.</h4>
+                        </figcaption>
+                    </a>
+                </figure>
+                
+                <figure class="teaser masonry__teaser">
+                    <a class="teaser__link" href="#">
+                        <picture class="teaser__picture">
+                            <img class="teaser__img" src="https://picsum.photos/400/400?image=50" alt="">
+                        </picture>
+
+                        <figcaption class="teaser__figcaption">
+                            <h2 class="teaser__headline teaser__link-text link__text--animated">03. Eius fugit, ut, illo voluptas</h2>
+                            <h4 class="teaser__subline teaser__link-text link__text--animated">Necessitatibus, sed eum.</h4>
+                        </figcaption>
+                    </a>
+                </figure>
+
+                <figure class="teaser masonry__teaser">
+                    <a class="teaser__link" href="#">
+                        <picture class="teaser__picture">
+                            <img class="teaser__img" src="https://picsum.photos/400/600?image=60" alt="">
+                        </picture>
+
+                        <figcaption class="teaser__figcaption">
+                            <h2 class="teaser__headline teaser__link-text link__text--animated">04. Earum a commodi temporibus ad.</h2>
+                            <h4 class="teaser__subline teaser__link-text link__text--animated">Necessitatibus, sed eum.</h4>
+                        </figcaption>
+                    </a>
+                </figure>
+
+                <figure class="teaser masonry__teaser">
+                    <a class="teaser__link" href="#">
+                        <picture class="teaser__picture">
+                            <img class="teaser__img" src="https://picsum.photos/400/400?image=50" alt="">
+                        </picture>
+
+                        <figcaption class="teaser__figcaption">
+                            <h2 class="teaser__headline teaser__link-text link__text--animated">05. Repellendus quasi earum voluptate</h2>
+                            <h4 class="teaser__subline teaser__link-text link__text--animated">Necessitatibus, sed eum.</h4>
+                        </figcaption>
+                    </a>
+                </figure>
+
+                <figure class="teaser masonry__teaser">
+                    <a class="teaser__link" href="#">
+                        <picture class="teaser__picture">
+                            <img class="teaser__img" src="https://picsum.photos/400/600?image=60" alt="">
+                        </picture>
+
+                        <figcaption class="teaser__figcaption">
+                            <h2 class="teaser__headline teaser__link-text link__text--animated">06. Officia possimus obcaecati quia.</h2>
+                            <h4 class="teaser__subline teaser__link-text link__text--animated">Necessitatibus, sed eum.</h4>
+                        </figcaption>
+                    </a>
+                </figure>
+            </main>
+
+            <aside class="sidebar">
+                <figure class="teaser teaser--featured">
+                    <a class="teaser__link" href="#">
+                        <picture class="teaser__picture">
+                            <img class="teaser__img" src="https://picsum.photos/400/600?image=100" alt="">
+                        </picture>
+
+                        <figcaption class="teaser__figcaption">
+                            <h2 class="teaser__headline teaser__link-text link__text--animated">07. Totam, et, consequatur.</h2>
+                            <h4 class="teaser__subline teaser__link-text link__text--animated">Necessitatibus, sed eum.</h4>
+                        </figcaption>
+                    </a>
+                </figure>
+            </aside>
+        </div>
+
+    </div>
+</body>
+</html>
