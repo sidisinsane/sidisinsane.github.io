@@ -1,0 +1,44 @@
+---
+import type { CollectionType } from "../lib/utils/index.ts";
+
+import Icon from "./Icon.astro";
+
+interface Props {
+  entry: CollectionType;
+  index: number;
+  total: number;
+  prev: any | null;
+  next: any | null;
+}
+
+const { entry, index, total, prev, next } = Astro.props;
+
+const locale = import.meta.env.SITE_LOCALE as keyof typeof Intl.Locale;
+---
+
+<nav class="pagination" lang={locale}>
+  {
+    prev && (
+      <a href={`/${entry.collection}/${prev.slug}/`} title={prev.data.title}>
+        <Icon name="previous" size="m" />
+      </a>
+    )
+  }
+  <span>{`${index + 1}`.padStart(`${total}`.length, "0")} of {total}</span>
+  {
+    next && (
+      <a href={`/${entry.collection}/${next.slug}/`} title={next.data.title}>
+        <Icon name="next" size="m" />
+      </a>
+    )
+  }
+</nav>
+
+<style>
+  .pagination {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-inline: auto;
+  }
+</style>

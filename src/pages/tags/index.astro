@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content";
+import { sortByPubDate, sortBySlug } from "../../lib/utils/index.ts";
+
+import Layout from "../../layouts/BaseLayout.astro";
+
+import CollectionHero from "../../components/CollectionHero.astro";
+
+// Snippets
+const snippets = await getCollection("snippets", ({ data }) => {
+  return data.isDraft !== true;
+});
+snippets.sort(sortByPubDate);
+
+// UDHR
+const udhr = await getCollection("udhr", ({ data }) => {
+  return data.isDraft !== true;
+});
+udhr.sort(sortBySlug);
+
+const tagsCollection = [...snippets, ...udhr];
+
+const pageTitle = "Tags";
+---
+
+<Layout title={pageTitle}>
+  <CollectionHero collection={tagsCollection} />
+</Layout>

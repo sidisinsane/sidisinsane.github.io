@@ -1,0 +1,83 @@
+---
+import type { CollectionType } from "../lib/utils/index.ts";
+import {
+  i18nFormatDate,
+  getAuthorNameFromAuthorSlug,
+  removeUrlProtocol,
+} from "../lib/utils/index.ts";
+
+import Debug from "./Debug.astro";
+
+interface Props {
+  entry: CollectionType;
+  hasAuthor?: boolean;
+}
+
+const { entry, hasAuthor = false } = Astro.props;
+
+let bylinePrefix = "Added ";
+if (hasAuthor) {
+  bylinePrefix =
+    entry.data.author.slug && entry.data.author.slug == "sidisinsane"
+      ? "By "
+      : "Inspired by ";
+}
+---
+
+<div class:list={["byline", "collection-navigation__byline"]}>
+  {bylinePrefix}
+  {
+    hasAuthor && entry.data.author.slug && (
+      <>
+        <a
+          class="byline__link"
+          href={`/authors/${entry.data.author.slug}/`}
+          title=""
+        >
+          {getAuthorNameFromAuthorSlug(entry.data.author.slug)}
+        </a>
+        {", "}
+      </>
+    )
+  }
+  {
+    hasAuthor && entry.data.isBasedOnUrl && (
+      <>
+        <a
+          class="byline__link"
+          href={entry.data.isBasedOnUrl}
+          title=""
+          target="_blank"
+          rel="noopener"
+        >
+          {removeUrlProtocol(entry.data.isBasedOnUrl).toLowerCase()}
+        </a>
+        {", "}
+      </>
+    )
+  }
+  {
+    entry?.data?.pubDate && (
+      <time datetime={entry.data.pubDate}>
+        {i18nFormatDate({ dateString: entry.data.pubDate })}
+      </time>
+    )
+  }
+</div>
+
+<Debug item={entry.data} />
+
+<style>
+  .byline {
+    font-size: 0.75rem;
+  }
+
+  .byline__link {
+    text-decoration: none;
+    transition: color 0.2s var(--ease-1);
+  }
+
+  .byline__link:hover {
+    color: var(--fg-emphasized);
+  }
+</style>

@@ -1,0 +1,54 @@
+---
+import { getCollection } from "astro:content";
+import { sortByPubDate, sortBySlug } from "../lib/utils/index.ts";
+
+import Layout from "../layouts/BaseLayout.astro";
+
+import CollectionHero from "../components/CollectionHero.astro";
+import CollectionSection from "../components/CollectionSection.astro";
+import Debug from "../components/Debug.astro";
+
+// Snippets
+const snippets = await getCollection("snippets", ({ data }) => {
+  return data.isDraft !== true;
+});
+snippets.sort(sortByPubDate);
+
+// UDHR
+const udhr = await getCollection("udhr", ({ data }) => {
+  return data.isDraft !== true;
+});
+udhr.sort(sortBySlug);
+
+const tagsCollection = [...snippets, ...udhr];
+
+const pageTitle = "Home";
+const sections = [
+  {
+    title: "Snippets",
+    description:
+      "A collection of frontend snippets. Some of them are published on CodePen.",
+    collection: snippets,
+    hasAuthor: true,
+    hasByline: true,
+    debug: false,
+  },
+  {
+    title: "UDHR",
+    description:
+      "The Universal Declaration of Human Rights is translated into allmost 500 languages. Ideal for i18n stuff.",
+    collection: udhr,
+    hasAuthor: false,
+    hasByline: true,
+    debug: false,
+  },
+];
+---
+
+<Layout title={pageTitle}>
+  <CollectionHero collection={tagsCollection} />
+
+  {sections.map((section) => <CollectionSection {...section} />)}
+
+  <Debug item={sections} />
+</Layout>

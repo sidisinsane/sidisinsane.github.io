@@ -1,0 +1,93 @@
+---
+import { getEntry } from "astro:content";
+
+import SocialLink from "../components/SocialLink.astro";
+
+interface Props {
+  authorSlug?: string;
+}
+
+const { authorSlug = import.meta.env.SITE_AUTHOR } = Astro.props;
+
+// 1. Get single antry from given author
+const authorProfile = await getEntry("authors", authorSlug);
+
+// 2. Filter all non-linkable entries (includes "email") from profile data
+const authorProfileBlacklist = ["isDraft", "name", "alias", "email"];
+const authorProfileLinks = Object.fromEntries(
+  Object.entries(authorProfile?.data).filter(
+    ([key]) => !authorProfileBlacklist.includes(key),
+  ),
+);
+
+// 3. Count links and repeat placeholder character "·" n-times
+const authorProfileLinksCountBlacklist = ["isDraft", "name", "alias"];
+const authorProfileLinksCount = Object.entries(authorProfile?.data).filter(
+  ([key]) => !authorProfileLinksCountBlacklist.includes(key),
+).length as number;
+const linksCountChar = "·";
+const linksCount = linksCountChar.repeat(authorProfileLinksCount);
+---
+
+<div class="social" style=`--links-count: "${linksCount}";`>
+  <nav class="social__navigation">
+    {
+      Object.keys(authorProfileLinks).map((service) => (
+        <SocialLink
+          service={service}
+          alias={authorProfileLinks[service] as string}
+        />
+      ))
+    }
+  </nav>
+
+  {
+    authorProfile?.data["email"] && (
+      <p class="email">{authorProfile?.data["email"]}</p>
+    )
+  }
+</div>
+
+<style>
+  .social {
+    --links-count: "·";
+
+    color: var(--fg);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: calc(var(--gap) / 3);
+    row-gap: calc(var(--gap) / 4);
+  }
+
+  .social__navigation {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: calc(var(--gap) / 3);
+  }
+
+  .social__navigation::before {
+    content: var(--links-count);
+  }
+
+  a {
+    display: flex;
+    grid-auto-flow: column;
+    align-items: center;
+    gap: calc(var(--gap) / 6);
+    width: 1.4rem;
+    transition: color 0.2s var(--ease-1);
+  }
+
+  a:hover {
+    color: var(--fg-emphasized);
+  }
+
+  svg {
+    display: block;
+    width: 1.4rem;
+    height: auto;
+  }
+</style>

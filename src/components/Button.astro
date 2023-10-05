@@ -1,0 +1,113 @@
+---
+interface Props extends HTMLAnchorElement {
+  title: string;
+  url: string;
+  icon?: "prev" | "next";
+}
+
+const { title, url, icon }: Props = Astro.props;
+---
+
+<a href={url} class="button" title={title} aria-label={title}>
+  {
+    icon && icon == "next" && (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        class="button__icon"
+        aria-hidden="true"
+        focusable="false"
+        fill="currentColor"
+      >
+        <path d="M10.02 6L8.61 7.41L13.19 12l-4.58 4.59L10.02 18l6-6l-6-6z" />
+      </svg>
+    )
+  }
+  {
+    icon && icon == "prev" && (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        class="button__icon"
+        aria-hidden="true"
+        focusable="false"
+        fill="currentColor"
+      >
+        <path d="M15.61 7.41L14.2 6l-6 6l6 6l1.41-1.41L11.03 12l4.58-4.59z" />
+      </svg>
+    )
+  }
+</a>
+
+<style>
+  .button {
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: start;
+    font-size: 1.5rem;
+    background-color: var(--bg);
+    color: var(--fg);
+    border-radius: 8px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
+    text-align: center;
+    line-height: 1.1;
+    transition: all 220ms var(--ease-in-out-1);
+  }
+
+  .button__icon {
+    width: 0.9em;
+    height: 0.9em;
+    fill: currentcolor;
+  }
+
+  .button__icon--end {
+    margin-right: 0;
+    margin-left: 0.5em;
+  }
+
+  .button:not(:has(.button__icon)) {
+    padding: 0.25em 0.75em;
+    min-width: 10ch;
+    min-height: 44px;
+  }
+
+  .button:has(.button__icon) {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    padding: 0.35em;
+    box-shadow: none;
+  }
+
+  .button:hover,
+  .button:active {
+    color: var(--fg-emphasized);
+  }
+
+  .button:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--highlight);
+  }
+
+  .button--small {
+    font-size: 1.15rem;
+  }
+
+  .button__icon {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+</style>

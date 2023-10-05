@@ -1,0 +1,59 @@
+---
+import { i18nFormatDate, removeUrlProtocol } from "../lib/utils/index.ts";
+
+import Byline from "./Byline.astro";
+
+interface Props {
+  authorUrl: string;
+  authorName: string;
+  isBasedOnUrl?: string;
+  pubDate?: string;
+  locale?: keyof typeof Intl.Locale;
+}
+
+const {
+  locale = import.meta.env.SITE_LOCALE as keyof typeof Intl.Locale,
+  authorUrl,
+  authorName,
+  isBasedOnUrl,
+  pubDate,
+} = Astro.props;
+
+const pubDateFormatted = i18nFormatDate({
+  dateString: pubDate,
+  locale: locale,
+});
+---
+
+<footer class="footer">
+  {
+    isBasedOnUrl ? (
+      <p>
+        Based on{" "}
+        <a href={isBasedOnUrl} title="" target="_blank" rel="noopener">
+          {removeUrlProtocol(isBasedOnUrl).toLowerCase()}
+        </a>
+        by
+        <a href={authorUrl} title="">
+          {authorName}
+        </a>
+        {""}. Accessed {pubDateFormatted}.
+      </p>
+    ) : (
+      <p>
+        By{" "}
+        <a href={authorUrl} title="">
+          {authorName}
+        </a>
+        {""}, {pubDateFormatted}.
+      </p>
+    )
+  }
+</footer>
+
+<style>
+  .footer {
+    text-align: center;
+    padding: 1rem;
+  }
+</style>

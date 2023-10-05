@@ -1,0 +1,85 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  collectionName?: "tags" | "snippets" | "authors" | "udhr";
+}
+
+const { title, description, collectionName } = Astro.props;
+---
+
+<section class:list={["section", collectionName]}>
+  <div class="section__aside">
+    <header class="section__header">
+      <h2 class="section__title">
+        {
+          collectionName == "tags" && (
+            <svg
+              class="section__title-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M20 10V8h-4V4h-2v4h-4V4H8v4H4v2h4v4H4v2h4v4h2v-4h4v4h2v-4h4v-2h-4v-4h4zm-6 4h-4v-4h4v4z" />
+            </svg>
+          )
+        }
+        <span class="section__title-name">{title}</span>
+      </h2>
+      {description && <p class="section__description">{description}</p>}
+    </header>
+  </div>
+  <slot />
+</section>
+
+<style>
+  .section {
+    grid-column: 1/4;
+    padding-bottom: 15%;
+    padding-top: 15%;
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      display: grid;
+      grid-gap: 1.5rem;
+      grid-template-columns: 2fr 3fr;
+    }
+  }
+
+  .section__header {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .section__aside {
+      grid-column: 1/2;
+    }
+
+    .section__header {
+      position: sticky;
+      top: 2rem;
+      margin: 0;
+    }
+  }
+
+  .section__title {
+    font-size: 3rem;
+    line-height: 1;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+  }
+
+  .section__title-icon {
+    display: block;
+    height: 0.75em;
+    width: auto;
+    position: relative;
+    inset-block-start: 0.1em;
+  }
+</style>

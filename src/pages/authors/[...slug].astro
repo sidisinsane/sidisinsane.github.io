@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+
+import Layout from "../../layouts/BaseLayout.astro";
+
+import CollectionHero from "../../components/CollectionHero.astro";
+import CollectionSection from "../../components/CollectionSection.astro";
+import Debug from "../../components/Debug.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("authors");
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: entry,
+  }));
+}
+
+const entry = Astro.props;
+const { Content } = await entry.render();
+
+const authorSlug = entry.data.alias;
+const authorSnippets = await getCollection("snippets", ({ data }) => {
+  return data.author.slug == authorSlug;
+});
+---
+
+<Layout title={authorSlug}>
+  <CollectionHero collection={authorSnippets} authorSlug={authorSlug}>
+    <Content />
+  </CollectionHero>
+
+  <CollectionSection
+    title={`Snippets`}
+    collection={authorSnippets}
+    hasByline={true}
+  />
+
+  <>
+    <Debug item={`authorSlug: ${authorSlug}`} />
+    <Debug item={authorSnippets} />
+  </>
+</Layout>

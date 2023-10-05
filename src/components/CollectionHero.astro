@@ -1,0 +1,54 @@
+---
+import AuthorBar from "./AuthorBar.astro";
+import type { CollectionType } from "../lib/utils/index.ts";
+import CollectionTags from "./CollectionTags.astro";
+
+interface Props {
+  collection: CollectionType[];
+  authorSlug?: string;
+  isAuthors?: boolean;
+}
+
+const { collection, authorSlug, isAuthors = false } = Astro.props;
+
+const authorBarAuthorSlug = authorSlug || import.meta.env.SITE_AUTHOR;
+---
+
+<header class="hero">
+  <div class="hero__inner">
+    <slot />
+
+    {!isAuthors && <CollectionTags collection={collection} />}
+
+    <div class="hero__about">
+      <AuthorBar authorSlug={authorBarAuthorSlug} />
+    </div>
+  </div>
+</header>
+
+<style>
+  .hero {
+    display: grid;
+    place-content: center;
+    min-height: calc(100vh - var(--page-offset-block-start));
+    position: relative;
+    z-index: 1;
+  }
+
+  @supports (height: 100dvh) {
+    .hero {
+      min-height: calc(100dvh - var(--page-offset-block-start));
+    }
+  }
+
+  .hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(var(--gap) * 2);
+  }
+
+  .hero__about {
+    align-self: flex-end;
+  }
+</style>
