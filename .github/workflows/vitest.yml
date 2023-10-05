@@ -17,9 +17,3 @@ jobs:
         run: pnpm install
       - name: Run Vitest tests
         run: pnpm run vitest:test
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: vitest-report
-          path: coverage/unit/vitest/
-          retention-days: 30
