@@ -17,14 +17,8 @@ jobs:
         with:
           version: 8.7
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
       - name: Run Playwright tests
         run: pnpm run playwright:test
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: playwright-report
-          path: coverage/e2e/playwright/
-          retention-days: 30

@@ -17,12 +17,6 @@ jobs:
         with:
           version: 8.7
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: Run Cypress tests
         run: pnpm run cypress:test
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: cypress-report
-          path: coverage/e2e/cypress/
-          retention-days: 30
