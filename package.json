@@ -4,7 +4,6 @@
   "type": "module",
   "scripts": {
     "astro": "astro",
-    "prebuild": "npm-run-all postcss fix:* prettier:write test",
     "build": "astro build",
     "dev": "astro dev",
     "debug": "DEBUG=true pnpm run dev",
