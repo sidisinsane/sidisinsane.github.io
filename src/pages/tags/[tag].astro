@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-
-import type { CollectionType } from "../../lib/utils/index.ts";
+import type { CollectionEntry } from "astro:content";
 
 import Layout from "../../layouts/BaseLayout.astro";
 
@@ -10,19 +9,21 @@ import CollectionNavigation from "../../components/CollectionNavigation.astro";
 import Debug from "../../components/Debug.astro";
 
 interface Props {
-  entries: CollectionType[];
+  entries: CollectionEntry<"snippets">[] | CollectionEntry<"udhr">[];
 }
 
 export async function getStaticPaths() {
-  const snippets = await getCollection("snippets", ({ data }) => {
+  const snippets = (await getCollection("snippets", ({ data }) => {
     return data.isDraft !== true;
-  });
+  })) as CollectionEntry<"snippets">[];
 
-  const udhr = await getCollection("udhr", ({ data }) => {
+  const udhr = (await getCollection("udhr", ({ data }) => {
     return data.isDraft !== true;
-  });
+  })) as CollectionEntry<"udhr">[];
 
-  const entries = [...snippets, ...udhr];
+  const entries = [...snippets, ...udhr] as
+    | CollectionEntry<"snippets">[]
+    | CollectionEntry<"udhr">[];
 
   // Tags
   const udhrTags = [...new Set(udhr.map((entry) => entry.data.tags).flat())];
@@ -36,7 +37,7 @@ export async function getStaticPaths() {
   return tags.map((tag) => {
     const entriesFiltered = entries.filter((entry) =>
       entry.data.tags.includes(tag),
-    );
+    ) as CollectionEntry<"snippets">[] | CollectionEntry<"udhr">[];
     return {
       params: { tag },
       props: { entries: entriesFiltered },

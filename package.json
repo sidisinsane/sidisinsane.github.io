@@ -4,8 +4,11 @@
   "type": "module",
   "scripts": {
     "astro": "astro",
-    "build": "astro build",
+    "build": "astro build --verbose",
+    "check": "astro check",
     "dev": "astro dev",
+    "info": "astro info",
+    "preview": "astro preview --verbose",
     "debug": "DEBUG=true pnpm run dev",
     "docs": "jsdoc -c ./jsdoc.config.json -r",
     "fix:js": "eslint . --fix --ext .js,.mjs,.cjs",
@@ -15,7 +18,6 @@
     "prettier": "prettier --check .",
     "prettier:write": "prettier --write .",
     "postcss": "postcss ./public/snippets/**/*.css --replace --config postcss.config.cjs",
-    "preview": "astro preview",
     "start": "pnpm run dev",
     "sync": "astro sync",
     "test": "pnpm run vitest:test",
@@ -36,9 +38,11 @@
     "prepare:photos": "./bin/prepare-photos.sh"
   },
   "dependencies": {
+    "@astrojs/check": "~0.2.0",
     "@astrojs/mdx": "~1.1.0",
     "astro": "~3.1.0",
-    "libphonenumber-js": "~1.10.44"
+    "libphonenumber-js": "~1.10.44",
+    "typescript": "~5.2.2"
   },
   "devDependencies": {
     "@playwright/test": "~1.38.1",

@@ -9,7 +9,7 @@ export type CollectionType =
   | CollectionEntry<"udhr">;
 
 export interface CollectionPaginationProps {
-  entry: CollectionType;
+  entry: CollectionEntry<"snippets"> | CollectionEntry<"udhr">;
   index: number;
   total: number;
   prev: any | null;
@@ -32,8 +32,9 @@ export async function getAuthorNameFromAuthorSlug(authorSlug: string) {
     "authors",
     authorSlug,
   )) as CollectionEntry<"authors">;
+  const name = await getAuthorNameFromCollection(entry);
 
-  return getAuthorNameFromCollection(entry);
+  return name;
 }
 
 /**

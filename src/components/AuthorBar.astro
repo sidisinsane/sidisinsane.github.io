@@ -1,5 +1,6 @@
 ---
 import { getEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 import Social from "./Social.astro";
 import Debug from "./Debug.astro";
@@ -12,7 +13,10 @@ const SITE_AUTHOR = import.meta.env.SITE_AUTHOR || "sidisinsane";
 
 const { authorSlug = SITE_AUTHOR } = Astro.props;
 
-const authorProfile = await getEntry("authors", authorSlug);
+const authorProfile = (await getEntry(
+  "authors",
+  authorSlug,
+)) as CollectionEntry<"authors">;
 const authorName = authorProfile?.data.name || `@${authorProfile?.data.alias}`;
 ---
 

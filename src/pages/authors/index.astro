@@ -1,5 +1,7 @@
 ---
 import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
 import { sortByAlias } from "../../lib/utils/index.ts";
 
 import Layout from "../../layouts/BaseLayout.astro";
@@ -10,9 +12,9 @@ import Debug from "../../components/Debug.astro";
 
 const SITE_AUTHOR = import.meta.env.SITE_AUTHOR;
 
-const authors = await getCollection("authors", ({ data }) => {
+const authors = (await getCollection("authors", ({ data }) => {
   return data.isDraft !== true && data.alias !== SITE_AUTHOR;
-});
+})) as CollectionEntry<"authors">[];
 
 authors.sort(sortByAlias);
 

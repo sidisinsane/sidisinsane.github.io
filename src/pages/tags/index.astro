@@ -1,5 +1,7 @@
 ---
 import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
 import { sortByPubDate, sortBySlug } from "../../lib/utils/index.ts";
 
 import Layout from "../../layouts/BaseLayout.astro";
@@ -7,18 +9,20 @@ import Layout from "../../layouts/BaseLayout.astro";
 import CollectionHero from "../../components/CollectionHero.astro";
 
 // Snippets
-const snippets = await getCollection("snippets", ({ data }) => {
+const snippets = (await getCollection("snippets", ({ data }) => {
   return data.isDraft !== true;
-});
+})) as CollectionEntry<"snippets">[];
 snippets.sort(sortByPubDate);
 
 // UDHR
-const udhr = await getCollection("udhr", ({ data }) => {
+const udhr = (await getCollection("udhr", ({ data }) => {
   return data.isDraft !== true;
-});
+})) as CollectionEntry<"udhr">[];
 udhr.sort(sortBySlug);
 
-const tagsCollection = [...snippets, ...udhr];
+const tagsCollection = [...snippets, ...udhr] as
+  | CollectionEntry<"snippets">[]
+  | CollectionEntry<"udhr">[];
 
 const pageTitle = "Tags";
 ---

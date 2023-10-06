@@ -24,19 +24,23 @@ if (hasAuthor) {
       ? "By "
       : "Inspired by ";
 }
+const authorSlug =
+  hasAuthor && entry.collection !== "authors" && entry.data.author.slug
+    ? entry.data.author.slug
+    : "";
+const authorName =
+  hasAuthor && entry.collection !== "authors" && entry.data.author.slug
+    ? await getAuthorNameFromAuthorSlug(authorSlug)
+    : "";
 ---
 
 <div class:list={["byline", "collection-navigation__byline"]}>
   {bylinePrefix}
   {
-    hasAuthor && entry.collection !== "authors" && entry.data.author.slug && (
+    authorName && (
       <>
-        <a
-          class="byline__link"
-          href={`/authors/${entry.data.author.slug}/`}
-          title=""
-        >
-          {getAuthorNameFromAuthorSlug(entry.data.author.slug)}
+        <a class="byline__link" href={`/authors/${authorSlug}/`} title="">
+          {authorName}
         </a>
         {", "}
       </>

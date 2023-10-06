@@ -1,6 +1,5 @@
 ---
 import { getCollection } from "astro:content";
-
 import type { CollectionEntry } from "astro:content";
 
 import Layout from "../../layouts/BaseLayout.astro";
@@ -22,12 +21,12 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
-
 const authorSlug = entry.data.alias;
-const authorSnippets = await getCollection("snippets", ({ data }) => {
+
+const authorSnippets = (await getCollection("snippets", ({ data }) => {
   return data.author.slug == authorSlug;
-});
+})) as CollectionEntry<"snippets">[];
+const { Content } = await entry.render();
 ---
 
 <Layout title={authorSlug}>

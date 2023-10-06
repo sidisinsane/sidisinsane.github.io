@@ -1,8 +1,9 @@
 ---
 import { getCollection, getEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
 import { sortBySlug } from "../../lib/utils/index.ts";
 
-import type { CollectionEntry } from "astro:content";
 import type { CollectionPaginationProps } from "../../lib/utils/index.ts";
 
 import Layout from "../../layouts/BaseLayout.astro";
@@ -17,9 +18,9 @@ interface Props extends CollectionPaginationProps {
 }
 
 export async function getStaticPaths() {
-  const entries = await getCollection("udhr", ({ data }) => {
+  const entries = (await getCollection("udhr", ({ data }) => {
     return data.isDraft !== true;
-  });
+  })) as CollectionEntry<"udhr">[];
 
   return entries.sort(sortBySlug).map((entry, index) => ({
     params: { slug: entry.slug },
@@ -36,7 +37,9 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { slug } = Astro.params;
 
-const author = await getEntry(entry.data.author);
+const author = (await getEntry(
+  entry.data.author,
+)) as CollectionEntry<"authors">;
 const { Content } = await entry.render();
 
 const layoutProps = {
