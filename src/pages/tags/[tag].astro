@@ -1,11 +1,17 @@
 ---
 import { getCollection } from "astro:content";
 
+import type { CollectionType } from "../../lib/utils/index.ts";
+
 import Layout from "../../layouts/BaseLayout.astro";
 
 import Section from "../../components/Section.astro";
 import CollectionNavigation from "../../components/CollectionNavigation.astro";
 import Debug from "../../components/Debug.astro";
+
+interface Props {
+  entries: CollectionType[];
+}
 
 export async function getStaticPaths() {
   const snippets = await getCollection("snippets", ({ data }) => {

@@ -1,11 +1,17 @@
 ---
 import { getCollection } from "astro:content";
 
+import type { CollectionEntry } from "astro:content";
+
 import Layout from "../../layouts/BaseLayout.astro";
 
 import CollectionHero from "../../components/CollectionHero.astro";
 import CollectionSection from "../../components/CollectionSection.astro";
 import Debug from "../../components/Debug.astro";
+
+interface Props {
+  entry: CollectionEntry<"authors">;
+}
 
 export async function getStaticPaths() {
   const entries = await getCollection("authors");
@@ -15,7 +21,7 @@ export async function getStaticPaths() {
   }));
 }
 
-const entry = Astro.props;
+const { entry } = Astro.props;
 const { Content } = await entry.render();
 
 const authorSlug = entry.data.alias;

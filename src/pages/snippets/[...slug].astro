@@ -1,6 +1,8 @@
 ---
 import { getCollection, getEntry } from "astro:content";
 import { sortByPubDate } from "../../lib/utils/index.ts";
+
+import type { CollectionEntry } from "astro:content";
 import type { CollectionPaginationProps } from "../../lib/utils/index.ts";
 
 import Layout from "../../layouts/BaseLayout.astro";
@@ -11,7 +13,9 @@ import EmbedCodepen from "../../components/EmbedCodepen.astro";
 import Byline from "../../components/Byline.astro";
 import Debug from "../../components/Debug.astro";
 
-interface Props extends CollectionPaginationProps {}
+interface Props extends CollectionPaginationProps {
+  entry: CollectionEntry<"snippets">;
+}
 
 export async function getStaticPaths() {
   const entries = await getCollection("snippets", ({ data }) => {

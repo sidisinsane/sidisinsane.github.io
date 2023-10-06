@@ -20,7 +20,5 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build
         run: pnpm run build
-      - name: Server start
-        run: pnpm start
-      - name: Run Cypress tests
-        run: pnpm run cypress:test
+      - name: Start server and run Cypress tests
+        run: pnpm run cypress:ci

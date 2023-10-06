@@ -1,6 +1,8 @@
 ---
 import { getCollection, getEntry } from "astro:content";
 import { sortBySlug } from "../../lib/utils/index.ts";
+
+import type { CollectionEntry } from "astro:content";
 import type { CollectionPaginationProps } from "../../lib/utils/index.ts";
 
 import Layout from "../../layouts/BaseLayout.astro";
@@ -10,7 +12,9 @@ import CollectionPagination from "../../components/CollectionPagination.astro";
 import Byline from "../../components/Byline.astro";
 import Debug from "../../components/Debug.astro";
 
-interface Props extends CollectionPaginationProps {}
+interface Props extends CollectionPaginationProps {
+  entry: CollectionEntry<"udhr">;
+}
 
 export async function getStaticPaths() {
   const entries = await getCollection("udhr", ({ data }) => {
@@ -30,10 +34,10 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
+const { slug } = Astro.params;
+
 const author = await getEntry(entry.data.author);
 const { Content } = await entry.render();
-
-const { slug } = Astro.params;
 
 const layoutProps = {
   locale: entry.data?.locale as keyof typeof Intl.Locale,
@@ -42,7 +46,7 @@ const layoutProps = {
   pubDate: entry.data?.pubDate,
   authorName: author?.data.name || author?.data.alias,
   authorUrl: `/authors/${author?.data.alias}`,
-  isBasedOnUrl: entry.data?.isBasedOnUrl,
+  isBasedOnUrl: entry.data?.url,
 };
 ---
 
