@@ -13,7 +13,8 @@ interface Props {
   hasAuthor?: boolean;
 }
 
-const DEFAULT_LOCALE = import.meta.env.SITE_LOCALE as keyof typeof Intl.Locale;
+const SITE_LOCALE = (import.meta.env.SITE_LOCALE ||
+  "en-US") as keyof typeof Intl.Locale;
 
 const { collection, hasByline = false, hasAuthor = false } = Astro.props;
 ---
@@ -31,8 +32,10 @@ const { collection, hasByline = false, hasAuthor = false } = Astro.props;
                 title=""
               >
                 <h4 class="collection-navigation__title">
-                  {entry.data.codepenSlug && <Icon name="codepen" />}
-                  {getTitleFromCollection(entry, DEFAULT_LOCALE)}
+                  {entry.collection == "snippets" && entry.data.codepenSlug && (
+                    <Icon name="codepen" />
+                  )}
+                  {getTitleFromCollection(entry, SITE_LOCALE)}
                 </h4>
 
                 {entry.data.description && (

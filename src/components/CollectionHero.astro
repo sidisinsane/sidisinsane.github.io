@@ -1,17 +1,19 @@
 ---
+import type { CollectionEntry } from "astro:content";
+
 import AuthorBar from "./AuthorBar.astro";
-import type { CollectionType } from "../lib/utils/index.ts";
 import CollectionTags from "./CollectionTags.astro";
 
 interface Props {
-  collection: CollectionType[];
+  collection: CollectionEntry<"snippets">[] | CollectionEntry<"udhr">[];
   authorSlug?: string;
   isAuthors?: boolean;
 }
 
 const { collection, authorSlug, isAuthors = false } = Astro.props;
 
-const authorBarAuthorSlug = authorSlug || import.meta.env.SITE_AUTHOR;
+const SITE_AUTHOR = import.meta.env.SITE_AUTHOR || "sidisinsane";
+const authorBarAuthorSlug = authorSlug || SITE_AUTHOR;
 ---
 
 <header class="hero">

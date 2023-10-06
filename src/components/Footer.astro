@@ -11,8 +11,11 @@ interface Props {
   locale?: keyof typeof Intl.Locale;
 }
 
+const SITE_LOCALE = (import.meta.env.SITE_LOCALE ||
+  "en-US") as keyof typeof Intl.Locale;
+
 const {
-  locale = import.meta.env.SITE_LOCALE as keyof typeof Intl.Locale,
+  locale = SITE_LOCALE,
   authorUrl,
   authorName,
   isBasedOnUrl,

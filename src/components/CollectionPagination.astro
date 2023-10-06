@@ -13,10 +13,11 @@ interface Props {
 
 const { entry, index, total, prev, next } = Astro.props;
 
-const locale = import.meta.env.SITE_LOCALE as keyof typeof Intl.Locale;
+const SITE_LOCALE = (import.meta.env.SITE_LOCALE ||
+  "en-US") as keyof typeof Intl.Locale;
 ---
 
-<nav class="pagination" lang={locale}>
+<nav class="pagination" lang={SITE_LOCALE}>
   {
     prev && (
       <a href={`/${entry.collection}/${prev.slug}/`} title={prev.data.title}>

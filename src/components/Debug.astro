@@ -4,7 +4,8 @@ interface Props {
   debug?: boolean;
 }
 
-const { item, debug = import.meta.env.DEBUG } = Astro.props;
+const DEBUG = import.meta.env.DEBUG || false;
+const { item, debug = DEBUG } = Astro.props;
 ---
 
 {

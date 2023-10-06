@@ -1,8 +1,8 @@
 ---
-import type { CollectionType } from "../lib/utils/index.ts";
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  collection: CollectionType[];
+  collection: CollectionEntry<"snippets">[] | CollectionEntry<"udhr">[];
 }
 
 const { collection } = Astro.props;

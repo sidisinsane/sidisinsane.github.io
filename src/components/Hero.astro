@@ -5,7 +5,9 @@ interface Props {
   authorSlug?: string;
 }
 
-const { authorSlug = import.meta.env.SITE_AUTHOR } = Astro.props;
+const SITE_AUTHOR = import.meta.env.SITE_AUTHOR || "sidisinsane";
+
+const { authorSlug = SITE_AUTHOR } = Astro.props;
 ---
 
 <header class="hero">

@@ -1,16 +1,23 @@
 ---
 import { getEntry } from "astro:content";
 
+import type { CollectionEntry } from "astro:content";
+
 import SocialLink from "../components/SocialLink.astro";
 
 interface Props {
   authorSlug?: string;
 }
 
-const { authorSlug = import.meta.env.SITE_AUTHOR } = Astro.props;
+const SITE_AUTHOR = import.meta.env.SITE_AUTHOR || "sidisinsane";
+
+const { authorSlug = SITE_AUTHOR } = Astro.props;
 
 // 1. Get single antry from given author
-const authorProfile = await getEntry("authors", authorSlug);
+const authorProfile = (await getEntry(
+  "authors",
+  authorSlug,
+)) as CollectionEntry<"authors">;
 
 // 2. Filter all non-linkable entries (includes "email") from profile data
 const authorProfileBlacklist = ["isDraft", "name", "alias", "email"];

@@ -15,10 +15,12 @@ interface Props {
 
 const { entry, hasAuthor = false } = Astro.props;
 
+const SITE_AUTHOR = import.meta.env.SITE_AUTHOR || "sidisinsane";
+
 let bylinePrefix = "Added ";
 if (hasAuthor) {
   bylinePrefix =
-    entry.data.author.slug && entry.data.author.slug == "sidisinsane"
+    entry.collection !== "authors" && entry.data.author.slug == SITE_AUTHOR
       ? "By "
       : "Inspired by ";
 }
@@ -27,7 +29,7 @@ if (hasAuthor) {
 <div class:list={["byline", "collection-navigation__byline"]}>
   {bylinePrefix}
   {
-    hasAuthor && entry.data.author.slug && (
+    hasAuthor && entry.collection !== "authors" && entry.data.author.slug && (
       <>
         <a
           class="byline__link"
@@ -41,7 +43,7 @@ if (hasAuthor) {
     )
   }
   {
-    hasAuthor && entry.data.isBasedOnUrl && (
+    hasAuthor && entry.collection == "snippets" && entry.data.isBasedOnUrl && (
       <>
         <a
           class="byline__link"
@@ -57,7 +59,7 @@ if (hasAuthor) {
     )
   }
   {
-    entry?.data?.pubDate && (
+    entry.collection !== "authors" && entry.data.pubDate && (
       <time datetime={entry.data.pubDate}>
         {i18nFormatDate({ dateString: entry.data.pubDate })}
       </time>

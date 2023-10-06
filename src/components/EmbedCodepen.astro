@@ -10,10 +10,14 @@ interface Props {
   editable?: boolean;
   clickToLoad?: boolean;
 }
+
+const CODEPEN_USER = import.meta.env.CODEPEN_USER || "sidisinsane";
+const CODEPEN_NAME = import.meta.env.CODEPEN_NAME || "Dirk Sidney Jansen";
+
 const {
   slug,
-  user = import.meta.env.CODEPEN_USER,
-  name = import.meta.env.CODEPEN_NAME,
+  user = CODEPEN_USER,
+  name = CODEPEN_NAME,
   height = 400,
   tabs = ["html", "result"],
   editable = true,
