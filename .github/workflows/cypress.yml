@@ -18,5 +18,10 @@ jobs:
           version: 8.7
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Server start
+        uses: cypress-io/github-action@v2
+        with:
+          build: pnpm run build
+          start: pnpm start
       - name: Run Cypress tests
         run: pnpm run cypress:test
